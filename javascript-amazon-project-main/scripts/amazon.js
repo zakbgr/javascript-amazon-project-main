@@ -77,6 +77,17 @@ cart.forEach((item)=>{
       quantity: 1
   });
 }
-console.log(cart) ;
+let cartQuantity= 0 ;
+cart.forEach((item)=>{
+  cartQuantity += item.quantity ;
+});
+
+let cardQ= document.querySelector('.js-quantity');
+cardQ.textContent = cartQuantity ;
+
 
 })});
+
+
+//save quantity into a local storage 
+
