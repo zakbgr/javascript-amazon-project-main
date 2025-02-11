@@ -1,4 +1,4 @@
-
+import { products } from '../data/products.js';
 import {cart} from '../data/cart.js' ;
 let productHTML='' ;
 products.forEach((product)=>{
@@ -88,7 +88,6 @@ cardQ.textContent = cartQuantity ;
 
 
 })});
-
 
 //save quantity into a local storage 
 
