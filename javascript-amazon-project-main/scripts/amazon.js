@@ -1,4 +1,5 @@
 
+import {cart} from '../data/cart.js' ;
 let productHTML='' ;
 products.forEach((product)=>{
    // const image = product.image ;
