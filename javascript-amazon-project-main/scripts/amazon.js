@@ -1,5 +1,5 @@
 import { products } from '../data/products.js';
-import {cart} from '../data/cart.js' ;
+import {cart,addToCart} from '../data/cart.js' ;
 
 let productHTML='' ;
 products.forEach((product)=>{
@@ -59,6 +59,21 @@ products.forEach((product)=>{
     
 
 }) ;
+
+
+
+function updateCartQuantity(){
+  
+  let cartQuantity= 0 ;
+
+  cart.forEach((cartItem)=>{
+    cartQuantity += cartItem.quantity ;
+  });
+  let cardQ= document.querySelector('.js-quantity');
+  cardQ.textContent = cartQuantity ;
+  
+}
+
 let stopTime  ;
 const addedMessageTimeouts = {};
 document.querySelectorAll('.js-add-to-cart')
@@ -66,50 +81,15 @@ document.querySelectorAll('.js-add-to-cart')
   button.addEventListener('click', () => {
   //console.log('added to cart') ;
   const productId = button.dataset.productId ;
-  let matchingItem='' ;
-cart.forEach((item)=>{
-  if(productId === item.productId){
-    matchingItem= item ; 
-  }
-});
-/*
-// Display added to cart message
-const addedToCartMessage = document.querySelector(`.js-check-${productId}`);
-addedToCartMessage.classList.add('js-added-msg') ;
-// Remove button functionality
-clearTimeout(stopTime) ;
-stopTime = setTimeout(()=>{
-  document.querySelector('.js-added-msg').remove() ;
-} ,2000) ;
-*/
+  addToCart(productId);
+  updateCartQuantity() ;
 
 
-const quantitySelector =document.querySelector(`.js-quantity-selector-${productId}`) ;
-//console.log(quantitySelector.value)
-const quantity = parseInt(quantitySelector.value) ;
-  if(matchingItem){
-    matchingItem.quantity += quantity ;
-  }else{ 
-  cart.push({
-      productId,
-     quantity
-  });
-}
-let cartQuantity= 0 ;
-cart.forEach((item)=>{
-  cartQuantity += item.quantity ;
-});
-
-let cardQ= document.querySelector('.js-quantity');
-cardQ.textContent = cartQuantity ;
- // save cart into a local storage 
- //localStorage.setItem('cart',JSON.stringify(cart)) ;
+// the added message will be hidden after 2 seconds
 
 const addedToCartMessage =document.querySelector(`.js-check-${productId}`);
-
 addedToCartMessage.classList.add('js-added-msg');
 setTimeout(() => {
-  
   const oldTimeout = addedMessageTimeouts[productId] ;
   if(oldTimeout){
     clearTimeout(oldTimeout) ;
@@ -117,19 +97,8 @@ setTimeout(() => {
   const timeOutId = setTimeout(() => {
     addedToCartMessage.classList.remove('js-added-msg') ;
   }, 2000);
-
-
   addedMessageTimeouts[productId] = timeOutId ;
 }, 2000);
 })
 
-}
-
-);
-
-
-
-
-//save quantity into a local storage 
-
-
+});
