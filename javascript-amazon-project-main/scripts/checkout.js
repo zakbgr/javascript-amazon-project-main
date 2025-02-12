@@ -110,3 +110,4 @@ let cartSummaryHTML='';
        container.remove() ;
     });
  });
+ 
