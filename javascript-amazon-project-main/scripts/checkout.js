@@ -1,5 +1,6 @@
 import { products } from '../data/products.js';
 import {cart} from '../data/cart.js' ;
+import { formatCurrency } from './utils/money.js';
  
 let cartSummaryHTML='';
  cart.forEach((cartItem)=>{
@@ -11,8 +12,6 @@ let cartSummaryHTML='';
             matchingProduct = product ;
         }
     }) ;
-
-    console.log(matchingProduct) ;
 
     cartSummaryHTML+=`  <div class="cart-item-container">
             <div class="delivery-date">
@@ -28,7 +27,7 @@ let cartSummaryHTML='';
                  ${matchingProduct.name}
                 </div>
                 <div class="product-price">
-                  $${matchingProduct.priceCents /100}
+                  $${formatCurrency(matchingProduct.priceCents)}
                 </div>
                 <div class="product-quantity">
                   <span>
@@ -50,7 +49,7 @@ let cartSummaryHTML='';
                 <div class="delivery-option">
                   <input type="radio" checked
                     class="delivery-option-input"
-                    name="delivery-option-1">
+                    name="delivery-option-${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
                       Tuesday, June 21
@@ -63,7 +62,7 @@ let cartSummaryHTML='';
                 <div class="delivery-option">
                   <input type="radio"
                     class="delivery-option-input"
-                    name="delivery-option-1">
+                    name="delivery-option-${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
                       Wednesday, June 15
@@ -76,13 +75,13 @@ let cartSummaryHTML='';
                 <div class="delivery-option">
                   <input type="radio"
                     class="delivery-option-input"
-                    name="delivery-option-1">
+                    name="delivery-option-${matchingProduct.id}">
                   <div>
                     <div class="delivery-option-date">
                       Monday, June 13
                     </div>
                     <div class="delivery-option-price">
-                       $9.99 - Shipping
+                        $9.99 - Shipping
                     </div>
                   </div>
                 </div>
