@@ -1,5 +1,5 @@
 import { products } from '../data/products.js';
-import {cart,removeFromCart,calculateCartQuantity} from '../data/cart.js' ;
+import {cart,removeFromCart,calculateCartQuantity,updateQuantity,getItemQuantity} from '../data/cart.js' ;
 import { formatCurrency } from './utils/money.js';
 
  
@@ -35,12 +35,15 @@ let cartSummaryHTML='';
                 </div>
                 <div class="product-quantity">
                   <span>
-                    Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+                    Quantity: <span class="quantity-label js-quantity-label-${matchingProduct.id} ">${cartItem.quantity}</span>
                   </span>
-                  <span class="update-quantity-link link-primary js-update-link"
+                  <span class="update-quantity-link link-primary js-update-link "
                   data-product-id="${matchingProduct.id}">
                     Update
                   </span> 
+                  <input class="quantity-input js-input-${matchingProduct.id}"><span class="save-quantity-link link-primary js-save-${matchingProduct.id}" 
+                   data-product-id="${matchingProduct.id}">save</span>
+                  
                   <span class="delete-quantity-link link-primary js-delete-link"
                   data-product-id="${matchingProduct.id}"
                   >
@@ -128,6 +131,39 @@ document.querySelectorAll('.js-update-link')
 .forEach(link=>{
     link.addEventListener('click',()=>{
         const productId = link.dataset.productId ;
-        console.log(productId) ;
+        const container = document.querySelector(`.js-cart-item-container-${productId}`) ;
+        container.classList.add('is-editing-quantity') ;
+        // SWITCHING TO SAVE BUTTON
+        
+
+
     })
-})
+});
+
+document.querySelectorAll(`.save-quantity-link`)
+.forEach(link=>{
+  link.addEventListener('click',()=>{
+    const productId = link.dataset.productId ;
+    const container = document.querySelector(`.js-cart-item-container-${productId}`) ;
+    const inputLable = document.querySelector(`.js-input-${productId}`) ;
+
+    const newQuantity = Number(inputLable.value) ;
+    if(newQuantity >=0 &&newQuantity<1000 ){
+
+      container.classList.remove('is-editing-quantity') ;
+    
+      updateQuantity(productId,newQuantity) ;
+      document.querySelector(`.js-quantity-label-${productId}`)
+      .innerHTML = newQuantity ;
+      checkoutCount() ;
+
+    }else{
+     
+      alert('Please enter a valid quantity between 0 and 999') ;
+      return;
+    }
+ 
+  }) ;
+
+}) ; 
+
