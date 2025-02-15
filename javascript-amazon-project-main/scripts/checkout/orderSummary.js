@@ -1,4 +1,4 @@
-import { products } from '../../data/products.js';
+import { products ,getProduct} from '../../data/products.js';
 import {cart,
     removeFromCart,
     calculateCartQuantity,
@@ -7,7 +7,7 @@ import {cart,
 import formatCurrency  from '../utils/money.js';
 //import {hello} from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js' ;
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js' ;
-import {deliveryOptions} from '../../data/deliveryOptions.js' ;
+import {deliveryOptions , getDeliveryOption} from '../../data/deliveryOptions.js' ;
 
 
 
@@ -18,13 +18,15 @@ let cartSummaryHTML='';
  cart.forEach((cartItem)=>{
 
     const productId = cartItem.productId ;
-    let matchingProduct ;
+
+   /* let matchingProduct ;
     products.forEach((product)=>{
         if(productId === product.id){
             matchingProduct = product ;
         }
-    }) ;
-
+    }) ;*/
+     let matchingProduct =getProduct(productId) ;
+/*
     const deliveryOptionId =  cartItem.deliveryOptionId ;
     let deliveryOption ;
 
@@ -34,8 +36,9 @@ let cartSummaryHTML='';
        // console.log('delivery pp ',deliveryOption) ;
       }
     });
+    */
    // console.log(deliveryOption.deliveryDays) ;
- 
+    let deliveryOption = getDeliveryOption(cartItem.deliveryOptionId) ;
 
     const today = dayjs() ;
     const dv = deliveryOption.deliveryDays ;
