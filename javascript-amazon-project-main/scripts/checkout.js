@@ -7,6 +7,8 @@ import {deliveryOptions} from '../data/deliveryOptions.js' ;
 
 
 
+function renderOrderSummary(){
+
 
 let cartSummaryHTML='';
  cart.forEach((cartItem)=>{
@@ -32,11 +34,10 @@ let cartSummaryHTML='';
  
 
     const today = dayjs() ;
-    const deliveryDate = today.add(deliveryOption.deliveryDays,'days');
+    const dv = deliveryOption.deliveryDays ;
+    const deliveryDate = today.add(dv,'days');
     const dateString = deliveryDate.format('dddd , MMMM , D');
-
-    
-
+   // console.log(deliveryOption.deliveryDays) ;
 
     cartSummaryHTML+=`  <div class="cart-item-container
     js-cart-item-container-${matchingProduct.id}
@@ -105,7 +106,7 @@ let cartSummaryHTML='';
 `
         <div class="delivery-option js-delivery-option"
         data-product-id=${matchingProduct.id}
-        data-delivery-option-id=${deliveryOption}
+        data-delivery-option-id="${deliveryOption.id}"
         >
       <input type="radio" 
       ${isChecked ? 'checked' : '' }
@@ -140,7 +141,7 @@ let cartSummaryHTML='';
  });
  checkoutCount() ;
 
- export function checkoutCount(){
+  function checkoutCount(){
     const countQuantity = calculateCartQuantity() ;
      document.querySelector('.js-checkout-count')
      .innerHTML=`Checkout (<a class="return-to-home-link"
@@ -194,6 +195,10 @@ document.querySelectorAll('.js-delivery-option')
     const productId = Element.dataset.productId ;
     const deliveryOptionId = Element.dataset.deliveryOptionId
     updateDeliveryOption(productId, deliveryOptionId) ;
+    renderOrderSummary();
   });
-})
+}) ;
 
+
+}
+renderOrderSummary() ;
