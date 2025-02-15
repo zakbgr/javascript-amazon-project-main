@@ -181,7 +181,7 @@ document.querySelectorAll(`.save-quantity-link`)
     const inputLable = document.querySelector(`.js-input-${productId}`) ;
 
     const newQuantity = Number(inputLable.value) ;
-    if(newQuantity >=0 &&newQuantity<1000 ){
+    if(newQuantity >0 &&newQuantity<1000 ){
 
       container.classList.remove('is-editing-quantity') ;
     
@@ -193,7 +193,7 @@ document.querySelectorAll(`.save-quantity-link`)
 
     }else{
      
-      alert('Please enter a valid quantity between 0 and 999') ;
+      alert('Please enter a valid quantity between 1 and 999') ;
       return;
     }
  
